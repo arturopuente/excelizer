@@ -36,6 +36,7 @@ It's possible to redefine attributes using the `@model` reference
       def name
         @model.name.titleize
       end
+
     end
 
 Or even create new attributes. Keep in mind new attributes will be added at the end of the row, but you can explicitly define the position where they should be. In this example, `phone_number` will go before `birth_date` while `favorite_color` will go after it.
@@ -98,3 +99,7 @@ Brought to you by Arturo Puente and the team at [Phantasia](http://www.phantasia
 
 0.0.8 Safer attribute initialization.  
 0.0.7 First release. Codename: Bond
+
+## License
+
+This project is released under the [MIT license](http://opensource.org/licenses/MIT).
