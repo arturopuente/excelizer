@@ -16,7 +16,7 @@ Or install it yourself as:
 
     $ gem install excelizer
 
-Also, you will need to add this line to the `config/initializers/mime_types.rb` file:
+You will need to add this line to the `config/initializers/mime_types.rb` file:
 
     Mime::Type.register "application/vnd.ms-excel", :xls
 
@@ -28,7 +28,7 @@ You should create a `downloaders` folder inside the `app` folder. You can define
       attr_downloadable :name, :last_name, :email, :birth_date
     end
 
-You can redefine attributes using the `@model` reference 
+It's possible to redefine attributes using the `@model` reference 
 
     class UserDownloader < Excelizer::Base
       attr_downloadable :name, :last_name, :email, :birth_date
@@ -38,7 +38,7 @@ You can redefine attributes using the `@model` reference
       end
     end
 
-Or you can create new attributes. Keep in mind new attributes will be added at the end of the row, but you can explicitly define the position where they should be. In this example, `phone_number` will go before `birth_date` while `favorite_color` will go after it.
+Or even create new attributes. Keep in mind new attributes will be added at the end of the row, but you can explicitly define the position where they should be. In this example, `phone_number` will go before `birth_date` while `favorite_color` will go after it.
 
     class UserDownloader < Excelizer::Base
       attr_downloadable :name, :last_name, :email, :phone_number, :birth_date
@@ -53,17 +53,17 @@ Or you can create new attributes. Keep in mind new attributes will be added at t
 
     end
 
-So, now we have a downloader, how do we actually use it? If you want to learn how to use it along ActiveAdmin, skip to the next section, if you just want to use the raw data, you can do this:
+Now that we have a downloader, how do we actually use it? If you want to learn how to use it along ActiveAdmin, skip to the next section, if you just want to use the raw data, you can do this:
 
     raw_data = UserDownloader.new.build_xls
 
-Also, you can pass a collection as a parameter for scoped results:
+You can optionally pass a collection as a parameter for scoped results:
   
     raw_data = UserDownloader.new.build_xls(User.where(name: 'James'))
 
 ## ActiveAdmin
 
-You need two things, an action item and a collection_action. Future releases won't need this ;)
+The recommended way to use this gem along ActiveAdmin is using an `action_item` and a `collection_action`. Future releases won't need this ;)
 
     ActiveAdmin.register User do
 
