@@ -6,7 +6,7 @@ module Excelizer
     def self.attr_downloadable(*attrs)
       attrs.each do |attr|
         define_method(attr) do
-          eval "@#{attr}"
+          self.instance_variable_get("@#{attr}")
         end
       end
     end
