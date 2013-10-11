@@ -26,14 +26,14 @@ module Excelizer
 
       # If the model class has the same method as the one defined in
       # attr_downloadble, that method will be called.
-      collection.map do |child_instance|
-        @model = child_instance
+      collection.map do |model_instance|
+        @model = model_instance
         own_methods.map do |attr|
           # Checks if the model has a method with the same name and
           # if the class definition overrides the model method
           reciever = self
           if model_methods.include?(attr.to_s) && reciever.send(attr).nil?
-            reciever = child_instance
+            reciever = model_instance
           end
           reciever.send(attr)
         end.compact
