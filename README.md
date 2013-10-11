@@ -86,7 +86,7 @@ You need two things, an action item and a collection_action. Future releases won
 
 ## Acknowledgments
 
-Brought to you by Arturo Puente and the team at Phantasia.
+Brought to you by Arturo Puente and the team at [Phantasia](http://www.phantasia.pe/).
 
 [![Phantasia](http://www.phantasia.pe/wp-content/themes/phantasia/images/logo-phantasia-header.png)](http://www.phantasia.pe/)
 
