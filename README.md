@@ -1,6 +1,6 @@
 # Excelizer
 
-Excelizer handles Excel files generation for your Rails models using the Spreadsheet gem, using an API similar to the awesome `active_model_serializers`.
+Excelizer handles Excel files generation for your Rails models with the Spreadsheet gem, using an API similar to the awesome `active_model_serializers`.
 
 ## Installation
 
