@@ -57,6 +57,10 @@ So, now we have a downloader, how do we actually use it? If you want to learn ho
 
     raw_data = UserDownloader.new.build_xls
 
+Also, you can pass a collection as a parameter for scoped results:
+  
+    raw_data = UserDownloader.new.build_xls(User.where(name: 'James'))
+
 ## ActiveAdmin
 
 You need two things, an action item and a collection_action. Future releases won't need this ;)
