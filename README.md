@@ -96,5 +96,5 @@ Brought to you by Arturo Puente and the team at [Phantasia](http://www.phantasia
 
 ## Changelog
 
-0.0.8 Safer attribute initialization.
+0.0.8 Safer attribute initialization.  
 0.0.7 First release. Codename: Bond
