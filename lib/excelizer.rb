@@ -43,9 +43,15 @@ module Excelizer
     def model_class
       Object.const_get self.class.name.gsub "Downloader", ""
     end
-
+    
     def model_clean_attributes(model_class_ref)
-      model_class_ref.new.attributes.keys - model_class_ref.protected_attributes.to_a
+      explicit_attribute_keys = model_class_ref.new.attributes.keys
+    
+      if model_class_ref.respond_to?(:protected_attributes)
+        explicit_attribute_keys - model_class_ref.protected_attributes.to_a
+      else
+        explicit_attribute_keys
+      end
     end
 
   end
