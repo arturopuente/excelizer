@@ -97,6 +97,7 @@ Brought to you by Arturo Puente and the team at [Phantasia](http://www.phantasia
 
 ## Changelog
 
+0.1.0 Custom header support.  
 0.0.9 Adds support for Rails 4.  
 0.0.8 Safer attribute initialization.  
 0.0.7 First release. Codename: Bond
