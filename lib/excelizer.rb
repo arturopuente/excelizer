@@ -11,8 +11,12 @@ module Excelizer
       end
     end
 
+    def self.attr_headers(*attrs)
+      @HEADERS = attrs.to_a
+    end
+
     def build_xls(collection=model_class.all)
-      headers = *methods.select { |m| self.method(m).owner == self.class }.map { |m| m.to_s.titleize }
+      headers = @HEADERS || *methods.select { |m| self.method(m).owner == self.class }.map { |m| m.to_s.titleize }
       records = get_collection_data(collection)
 
       Excelizer::Writer.write headers, records
