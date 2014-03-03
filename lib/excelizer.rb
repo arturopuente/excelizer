@@ -12,12 +12,12 @@ module Excelizer
     end
 
     def self.attr_headers(*attrs)
-      @headers = attrs.to_a
+      @@headers = attrs.to_a
     end
 
     def build_xls(collection=model_class.all)
-      if @headers
-        headers = @headers
+      if @@headers
+        headers = @@headers
       else
         headers = *methods.select { |m| self.method(m).owner == self.class }.map { |m| m.to_s.titleize }
       end
@@ -49,7 +49,7 @@ module Excelizer
     end
 
     def model_class
-      Object.const_get self.class.name.gsub "Downloader", ""
+      Object.const_get self.class.name.demodulize.gsub "Downloader", ""
     end
     
     def model_clean_attributes(model_class_ref)
