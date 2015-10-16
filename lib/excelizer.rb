@@ -16,7 +16,7 @@ module Excelizer
     end
 
     def build_xls(collection=model_class.all)
-      if @@headers
+      if defined?(@@headers)
         headers = @@headers
       else
         headers = *methods.select { |m| self.method(m).owner == self.class }.map { |m| m.to_s.titleize }
@@ -51,10 +51,10 @@ module Excelizer
     def model_class
       Object.const_get self.class.name.demodulize.gsub "Downloader", ""
     end
-    
+
     def model_clean_attributes(model_class_ref)
       explicit_attribute_keys = model_class_ref.new.attributes.keys
-    
+
       if model_class_ref.respond_to?(:protected_attributes)
         explicit_attribute_keys - model_class_ref.protected_attributes.to_a
       else
