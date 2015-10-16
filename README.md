@@ -34,50 +34,68 @@ You should create a `downloaders` folder inside the `app` folder. You can define
 
 ```ruby
 class UserDownloader < Excelizer::Base
-  attr_downloadable :name, :last_name, :email, :birth_date
+  attribute :name
+  attribute :last_name
+  attribute :email
+  attribute :token
 end
 ```
 
-It's possible to redefine attributes using the `@model` reference
+It's possible to redefine the attributes using the `object` reference
 
 ```ruby
 class UserDownloader < Excelizer::Base
-  attr_downloadable :name, :last_name, :email, :birth_date
+  attribute :token
 
-  def name
-    @model.name.titleize
+  def token
+    object.token + rand(100)
   end
-
 end
 ```
 
-Or even create new attributes by defining them as methods.  Keep in mind the declaration order of the attributes matters: `name` will be column `A` whereas `last_name` will be column `B`. In this example, `phone_number` will go before `birth_date` while `favorite_color` will go after it.
+Or even create new attributes by defining them as methods:
 
 ```ruby
 class UserDownloader < Excelizer::Base
-  attr_downloadable :name, :last_name, :email, :phone_number, :birth_date
+  attribute :full_name
 
-  def phone_number
-    '51' + @model.mobile_phone
+  def full_name
+    "#{object.name} #{object.last_name}"
   end
+end
+```
 
-  def favorite_color
-    @model.favorite_color || 'orange'
+And you can redefine the object variable by calling the `instance` method:
+
+```ruby
+class UserDownloader < Excelizer::Base
+  instance :user
+  attribute :full_name
+
+  def full_name
+    "#{user.name} #{user.last_name}"
   end
+end
+```
 
+You can redefine the column name by passing the `header` option:
+
+```ruby
+class UserDownloader < Excelizer::Base
+  attribute :full_name, header: "Nombre Completo"
 end
 ```
 
 Now that we have a downloader, how do we actually use it? If you want to learn how to use it along ActiveAdmin, skip to the next section, if you just want to use the raw output, you can do this:
 
 ```ruby
-output = UserDownloader.new.build_xls
+output = UserDownloader.new(User.all).download
 ```
 
 You can optionally pass a collection as a parameter for scoped results:
 
 ```ruby
-output = UserDownloader.new.build_xls(User.where(name: 'James'))
+output = UserDownloader.new(User.where(name: "Jaime")).download
 ```
 
 ## ActiveAdmin
@@ -86,9 +104,8 @@ The recommended way to use this gem along ActiveAdmin is using an `action_item` 
 
 ```ruby
 ActiveAdmin.register User do
-
   collection_action :download_xls do
-    send_data UserDownloader.new.build_xls,
+    send_data UserDownloader.new(User.all).download,
               type: 'application/vnd.ms-excel',
               filename: "user_report.xls"
   end
@@ -96,10 +113,8 @@ ActiveAdmin.register User do
   action_item only: [:index] do
     link_to "Download Excel", download_xls_admin_users_path
   end
-
 end
 ```
-
 
 ## Contributing
 
@@ -111,10 +126,12 @@ end
 
 ## Changelog
 
-0.1.0 Custom header support.  
-0.0.9 Adds support for Rails 4.  
-0.0.8 Safer attribute initialization.  
-0.0.7 First release.
+- 1.0.0 Introduces brand new API
+- 0.2.0 Fix custom header bug
+- 0.1.0 Custom header support
+- 0.0.9 Adds support for Rails 4
+- 0.0.8 Safer attribute initialization
+- 0.0.7 First release
 
 ## License
 
