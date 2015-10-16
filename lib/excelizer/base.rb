@@ -15,11 +15,8 @@ module Excelizer
       collection.map do |item|
         @record = item
         self.class.attributes.map do |attribute|
-          if item.respond_to?(attribute.name)
-            item.send(attribute.name)
-          else
-            self.send(attribute.name)
-          end.to_s
+          method = attribute.name
+          (respond_to?(method) ? send(method) : item.send(method)).to_s
         end
       end
     end
